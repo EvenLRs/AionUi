@@ -1,8 +1,8 @@
 name: 'Auto Build (main)'
 
-# 自动编译：push 到 main 时构建全部桌面平台安装包，产物作为 Actions artifact 保留，
-# 不创建 Release（避免误发布）。需要手动发布时用仓库自带的
-# "🔨 Manual Build"（build-manual.yml）或 "Build and Release"。
+# 自动编译：push 到 main 时构建 Windows-x64 与 macOS-arm64 安装包，
+# 产物作为 Actions artifact 保留，不创建 Release。
+# 需要手动跑其他平台时用仓库自带的 "🔨 Manual Build"。
 
 on:
   push:
@@ -14,14 +14,11 @@ on:
         required: true
         type: choice
         options:
-          - all
+          - win-mac
           - macos-arm64
-          - macos-x64
           - windows-x64
-          - windows-arm64
-          - linux-x64
-          - linux-arm64
-        default: 'all'
+          - all
+        default: 'win-mac'
 
 permissions:
   contents: read
@@ -41,7 +38,7 @@ jobs:
         id: set-matrix
         shell: bash
         run: |
-          PLATFORM="${{ github.event.inputs.platform || 'all' }}"
+          PLATFORM="${{ github.event.inputs.platform || 'win-mac' }}"
           MACOS_ARM64='{"platform":"macos-arm64","os":"macos-14","command":"node scripts/build-with-builder.js arm64 --mac --arm64","artifact-name":"macos-build-arm64","arch":"arm64"}'
           MACOS_X64='{"platform":"macos-x64","os":"macos-14","command":"node scripts/build-with-builder.js x64 --mac --x64","artifact-name":"macos-build-x64","arch":"x64"}'
           WINDOWS_X64='{"platform":"windows-x64","os":"windows-2022","command":"node scripts/build-with-builder.js x64 --win --x64","artifact-name":"windows-build-x64","arch":"x64"}'
@@ -50,26 +47,20 @@ jobs:
           LINUX_ARM64='{"platform":"linux-arm64","os":"ubuntu-24.04-arm","command":"node scripts/build-with-builder.js arm64 --linux --arm64","artifact-name":"linux-build-arm64","arch":"arm64"}'
 
           case "$PLATFORM" in
-            all)
-              MATRIX="{\"include\":[$MACOS_ARM64,$MACOS_X64,$WINDOWS_X64,$WINDOWS_ARM64,$LINUX_X64,$LINUX_ARM64]}"
+            win-mac)
+              MATRIX="{\"include\":[$WINDOWS_X64,$MACOS_ARM64]}"
               ;;
-            macos-x64)
-              MATRIX="{\"include\":[$MACOS_X64]}"
+            macos-arm64)
+              MATRIX="{\"include\":[$MACOS_ARM64]}"
               ;;
             windows-x64)
               MATRIX="{\"include\":[$WINDOWS_X64]}"
               ;;
-            windows-arm64)
-              MATRIX="{\"include\":[$WINDOWS_ARM64]}"
-              ;;
-            linux-x64)
-              MATRIX="{\"include\":[$LINUX_X64]}"
-              ;;
-            linux-arm64)
-              MATRIX="{\"include\":[$LINUX_ARM64]}"
+            all)
+              MATRIX="{\"include\":[$MACOS_ARM64,$MACOS_X64,$WINDOWS_X64,$WINDOWS_ARM64,$LINUX_X64,$LINUX_ARM64]}"
               ;;
             *)
-              MATRIX="{\"include\":[$MACOS_ARM64]}"
+              MATRIX="{\"include\":[$WINDOWS_X64,$MACOS_ARM64]}"
               ;;
           esac
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
