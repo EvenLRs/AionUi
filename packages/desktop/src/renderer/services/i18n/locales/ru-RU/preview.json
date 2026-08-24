@@ -3,6 +3,8 @@
   "downloadFile": "Скачать файл",
   "closePreview": "Закрыть предпросмотр",
   "collapsePanel": "Свернуть панель",
+  "maximizePanel": "Развернуть",
+  "restorePanel": "Восстановить",
   "source": "Исходник",
   "code": "Код",
   "preview": "Предпросмотр",
@@ -52,6 +54,7 @@
   "noTabs": "Нет открытых вкладок",
   "openInPanelTooltip": "Просмотреть в панели предпросмотра",
   "mermaidTitle": "Диаграмма Mermaid",
+  "wavedromTitle": "Диаграмма WaveDrom",
   "oversized": {
     "title": "Файл слишком большой для предпросмотра",
     "detail": "Размер файла {{size}} превышает предел {{threshold}}. Откройте его в системном редакторе.",
@@ -168,5 +171,6 @@
   },
   "zoomIn": "Увеличить",
   "zoomOut": "Уменьшить",
-  "zoomReset": "Сбросить вид"
+  "zoomReset": "Сбросить вид",
+  "diagramZoomHint": "Колесо — масштаб • Перетаскивание — панорама • ESC — закрыть"
 }

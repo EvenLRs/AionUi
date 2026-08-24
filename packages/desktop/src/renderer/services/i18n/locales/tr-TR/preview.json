@@ -3,6 +3,8 @@
   "downloadFile": "Dosyayı İndir",
   "closePreview": "Önizlemeyi Kapat",
   "collapsePanel": "Paneli Daralt",
+  "maximizePanel": "Büyüt",
+  "restorePanel": "Geri Yükle",
   "source": "Kaynak",
   "code": "Kod",
   "preview": "Önizleme",
@@ -50,6 +52,7 @@
   "noTabs": "Açık sekme yok",
   "openInPanelTooltip": "Önizleme panelinde görüntüle",
   "mermaidTitle": "Mermaid Diyagramı",
+  "wavedromTitle": "WaveDrom Diyagramı",
   "oversized": {
     "title": "Dosya önizleme için çok büyük",
     "detail": "Dosya boyutu {{size}}, {{threshold}} sınırını aşıyor. Lütfen bir sistem düzenleyicisinde açın.",
@@ -166,5 +169,6 @@
   },
   "zoomIn": "Yakınlaştır",
   "zoomOut": "Uzaklaştır",
-  "zoomReset": "Görünümü sıfırla"
+  "zoomReset": "Görünümü sıfırla",
+  "diagramZoomHint": "Yakınlaştırmak için kaydırın • Taşımak için sürükleyin • ESC ile kapatın"
 }

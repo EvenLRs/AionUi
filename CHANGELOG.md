@@ -1,5 +1,90 @@
 # Changelog
 
+## [2.1.60](https://github.com/iOfficeAI/AionUi/compare/v2.1.59...v2.1.60) (2026-08-21)
+
+### Desktop
+
+#### Features
+
+- **chat:** @@ conversation mentions and cross-conversation delivery UI (#4131)
+- **conversation:** allow empty-input start with assistant empty state (#4127)
+- **layout:** resizable desktop sider with snap-collapse (#4128)
+- **sidebar:** archive-first UI and archived page (#4126)
+- **explorer:** refresh a root via backend remount (#4121)
+- **renderer:** enable mermaid pan/zoom in chat markdown (#4108)
+
+#### Bug Fixes
+
+- **desktop:** log attribution for uncaught main-process errors (#4112)
+
+#### Refactoring
+
+- **feedback:** attach account email automatically (#4117)
+
+### Core ([v0.1.71](https://github.com/iOfficeAI/AionCore/releases/tag/v0.1.71))
+
+#### Features
+
+- **project:** add fs/remount to rebuild stale mounts (#910)
+- **session-message:** deliver messages across a user's conversations (#914)
+- **sidebar:** archive foundation and aggregated read model (#911)
+
+#### Bug Fixes
+
+- **app:** fall back to default log dir when custom log dir is unusable (AIONUI-231) (#898)
+- **claude:** append the assistant preset instead of replacing the system prompt (#900)
+- **codex:** send the assistant preset as developerInstructions, not baseInstructions (#897)
+- **conversation:** apply agent session titles at the relay level (#896)
+- **extension:** bound the builtin-skills materialize lock acquisition (AIONUI-168) (#903)
+- **project:** keep mounted targets when one fs/subscribe target fails (AIONUI-236) (#902)
+- **runtime:** log npm/npx probe stderr and missing-executable snapshot (AIONUI-62) (#904)
+
+---
+
+## [2.1.59](https://github.com/iOfficeAI/AionUi/compare/v2.1.58...v2.1.59) (2026-08-19)
+
+### Desktop
+
+#### Features
+
+- **explorer:** new file/dir + grouped row menu (#4102)
+- **feedback:** add optional contact email field (#4096)
+- **explorer:** drag-to-transfer files across the project tree (#4090)
+
+#### Bug Fixes
+
+- **markdown:** keep inline markup at the heading's size inside chat headings (#4104)
+- **acp:** render relative images in agent replies (#4103)
+- **desktop:** stop renderer launch-failed reload storm with backoff and throttled relaunch (#4100)
+- **ui:** make monochrome logos follow the theme color (#3614)
+- **security:** block path traversal in HTML renderer resource inlining (#4097)
+- **markdown:** render chat KaTeX formulas once in Shadow DOM (#4091)
+
+#### Refactoring
+
+- **media:** read image root from ConversationContext (#4105)
+
+### Core ([v0.1.70](https://github.com/iOfficeAI/AionCore/releases/tag/v0.1.70))
+
+#### Features
+
+- **monitor:** add fs/createFile command (#891)
+- **monitor:** back explorer drag-transfer with fs/copy and fs/move (#877)
+- **session:** distinguish Task subagents from background tasks (#890)
+
+#### Bug Fixes
+
+- **agent:** pair native media blocks with a link to the same file (#876)
+- **antigravity:** collapse agy's U+FFFD runs at text_delta joins (#888)
+- **antigravity:** route Team over the CLI, which is what agy was already using (#881)
+- **app:** bound the graceful-shutdown tail so the data-dir instance lock is released (#884)
+- **app:** harden the shutdown watchdog force-exit path
+- **app:** harden the shutdown watchdog force-exit path
+- **app:** keep backend_binary_path cmd.exe-launchable on Windows (#887)
+- **app:** reuse the app-level ConversationService in build_cron_state (#885)
+
+---
+
 ## [2.1.58](https://github.com/iOfficeAI/AionUi/compare/v2.1.57...v2.1.58) (2026-08-18)
 
 ### Desktop

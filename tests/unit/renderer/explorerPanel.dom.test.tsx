@@ -45,6 +45,9 @@ const makePort = (snapshots: Record<PeKey, Entry[]>): MonitorPort => ({
   subscribe: async (refs: DirRef[]) => ({
     snapshots: refs.map((r) => ({ target: r, entries: snapshots[refToKey(r)] ?? [] })),
   }),
+  remount: async (refs: DirRef[]) => ({
+    snapshots: refs.map((r) => ({ target: r, entries: snapshots[refToKey(r)] ?? [] })),
+  }),
   unsubscribe: () => {},
 });
 
@@ -152,6 +155,27 @@ describe('ExplorerPanel reveal highlight + scroll-into-view', () => {
       await flush();
     });
     expect(scrollSpy).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('ExplorerPanel full-row click target', () => {
+  it('spans the whole row via blockNode + a full-width title span', async () => {
+    configureExplorerStore(makePort({ [peKey('pe1', '')]: [dir('sub'), file('a.ts')] }));
+    const { container } = render(
+      <ExplorerPanel projectId='p1' roots={[{ pe_id: 'pe1', title: 'app', role: 'workspace' }]} />
+    );
+    await screen.findByText('a.ts');
+
+    // blockNode ⇒ arco tags EVERY node title with `-title-block` (flex: 1), so the
+    // click/expand target (arco's .arco-tree-node-title) fills the row instead of
+    // hugging the label. Without blockNode this class is absent.
+    const titles = container.querySelectorAll('.arco-tree-node-title');
+    expect(titles.length).toBeGreaterThan(0);
+    titles.forEach((el) => expect(el.className).toContain('arco-tree-node-title-block'));
+
+    // Our rendered title span fills that wrapper (`w-full`) so the right-click
+    // context-menu trigger and drop highlight also cover the whole row.
+    expect(screen.getByText('a.ts').closest('span[class*="w-full"]')).toBeTruthy();
   });
 });
 
