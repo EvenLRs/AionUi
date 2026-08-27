@@ -223,17 +223,19 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          echo "SENTRY_UPLOAD_SOURCE_MAPS=false" >> "$GITHUB_ENV"
+          echo "Sentry source map upload disabled"
 
-          if [[ "${{ matrix.platform }}" == "linux-x64" ]]; then
-            echo "SENTRY_UPLOAD_SOURCE_MAPS=true" >> "$GITHUB_ENV"
-            echo "Sentry source maps will be uploaded by linux-x64"
-          else
-            echo "SENTRY_UPLOAD_SOURCE_MAPS=false" >> "$GITHUB_ENV"
-            echo "Sentry source map upload skipped for ${{ matrix.platform }}"
-          fi
+      #    if [[ "${{ matrix.platform }}" == "linux-x64" ]]; then
+      #      echo "SENTRY_UPLOAD_SOURCE_MAPS=true" >> "$GITHUB_ENV"
+      #      echo "Sentry source maps will be uploaded by linux-x64"
+      #    else
+      #      echo "SENTRY_UPLOAD_SOURCE_MAPS=false" >> "$GITHUB_ENV"
+      #      echo "Sentry source map upload skipped for ${{ matrix.platform }}"
+      #    fi
 
       - name: Validate Sentry source map upload configuration
-        if: matrix.platform == 'linux-x64'
+        if: false # matrix.platform == 'linux-x64'
         shell: bash
         run: |
           set -euo pipefail
