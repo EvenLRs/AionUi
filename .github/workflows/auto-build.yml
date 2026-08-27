@@ -14,11 +14,11 @@ on:
         required: true
         type: choice
         options:
-          - win-mac
+          - linux-x64
           - macos-arm64
           - windows-x64
           - all
-        default: 'win-mac'
+        default: 'all'
 
 permissions:
   contents: read
@@ -38,7 +38,7 @@ jobs:
         id: set-matrix
         shell: bash
         run: |
-          PLATFORM="${{ github.event.inputs.platform || 'win-mac' }}"
+          PLATFORM="${{ github.event.inputs.platform || '*' }}"
           MACOS_ARM64='{"platform":"macos-arm64","os":"macos-14","command":"node scripts/build-with-builder.js arm64 --mac --arm64","artifact-name":"macos-build-arm64","arch":"arm64"}'
           MACOS_X64='{"platform":"macos-x64","os":"macos-14","command":"node scripts/build-with-builder.js x64 --mac --x64","artifact-name":"macos-build-x64","arch":"x64"}'
           WINDOWS_X64='{"platform":"windows-x64","os":"windows-2022","command":"node scripts/build-with-builder.js x64 --win --x64","artifact-name":"windows-build-x64","arch":"x64"}'
@@ -47,8 +47,8 @@ jobs:
           LINUX_ARM64='{"platform":"linux-arm64","os":"ubuntu-24.04-arm","command":"node scripts/build-with-builder.js arm64 --linux --arm64","artifact-name":"linux-build-arm64","arch":"arm64"}'
 
           case "$PLATFORM" in
-            win-mac)
-              MATRIX="{\"include\":[$WINDOWS_X64,$MACOS_ARM64]}"
+            linux-x64)
+              MATRIX="{\"include\":[$LINUX_X64]}"
               ;;
             macos-arm64)
               MATRIX="{\"include\":[$MACOS_ARM64]}"
@@ -60,7 +60,7 @@ jobs:
               MATRIX="{\"include\":[$MACOS_ARM64,$MACOS_X64,$WINDOWS_X64,$WINDOWS_ARM64,$LINUX_X64,$LINUX_ARM64]}"
               ;;
             *)
-              MATRIX="{\"include\":[$WINDOWS_X64,$MACOS_ARM64]}"
+              MATRIX="{\"include\":[$WINDOWS_X64,$MACOS_ARM64,$LINUX_X64]}"
               ;;
           esac
           echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
